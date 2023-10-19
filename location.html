@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  #status {
+    font-size: 18px;
+  }
+
+  .online {
+    color: green;
+  }
+
+  .offline {
+    color: red;
+  }
+</style>
+
+<body>
+
+  <div id="status">
+    User Status: <span id="onlineStatus" class="offline">Offline</span>
+  </div>
+
+  <script>
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+      }, function (error) {
+        console.error(`Error getting location: ${error.message}`);
+      });
+    } else {
+      console.log("Geolocation is not available in this browser.");
+    }
+
+
+    if (navigator.onLine) {
+      console.log("User is online.");
+    } else {
+      console.log("User is offline.");
+    }
+
+  </script>
+</body>
+
+<script>
+  const onlineStatusElement = document.getElementById("onlineStatus");
+
+  function updateOnlineStatus() {
+    if (navigator.onLine) {
+      onlineStatusElement.textContent = "Online";
+      onlineStatusElement.classList.remove("offline");
+      onlineStatusElement.classList.add("online");
+    } else {
+      onlineStatusElement.textContent = "Offline";
+      onlineStatusElement.classList.remove("online");
+      onlineStatusElement.classList.add("offline");
+    }
+  }
+
+  updateOnlineStatus(); // Initial check of online status
+  window.addEventListener("online", updateOnlineStatus);
+  window.addEventListener("offline", updateOnlineStatus);
+</script>
+
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>To-Do List</title>
+    <style>
+        ul {
+            list-style: none;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        button {
+            margin-left: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>To-Do List</h1>
+    <input type="text" id="task" placeholder="Add a new task">
+    <button onclick="addTask()">Add</button>
+
+    <ul id="todo-list"></ul>
+
+    <button onclick="sortTasks('asc')">Sort A-Z</button>
+    <button onclick="sortTasks('desc')">Sort Z-A</button>
+
+    <script>
+        let tasks = [];
+
+        function addTask() {
+            const taskInput = document.getElementById('task');
+            const taskText = taskInput.value.trim();
+
+            if (taskText !== '') {
+                tasks.push(taskText);
+                updateTaskList();
+                taskInput.value = '';
+            }
+        }
+
+        function deleteTask(index) {
+            tasks.splice(index, 1);
+            updateTaskList();
+        }
+
+        function updateTaskList() {
+            const todoList = document.getElementById('todo-list');
+            todoList.innerHTML = '';
+
+            tasks.forEach((task, index) => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <span>${task}</span>
+                    <button onclick="deleteTask(${index})">Delete</button>
+                `;
+                todoList.appendChild(listItem);
+            });
+        }
+
+        function sortTasks(order) {
+            if (order === 'asc') {
+                tasks.sort();
+            } else if (order === 'desc') {
+                tasks.sort((a, b) => b.localeCompare(a));
+            }
+
+            updateTaskList();
+        }
+
+        updateTaskList(); // Initial task list display
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>color generator</title>
+    <style>
+        body {
+            height: 100vh;
+        }
+
+        #ccBox {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="ccBox"></div>
+
+    <script>
+        //make rgb color using random method
+
+        function randomColor() {
+            var r = Math.floor(Math.random() * 256);
+            var g = Math.floor(Math.random() * 256);
+            var b = Math.floor(Math.random() * 256);
+            return "rgb(" + r + "," + g + "," + b + ")";
+        }
+        console.log(randomColor());
+        function changeColor() {
+            var colorBox = document.getElementById("ccBox");
+            var color = randomColor();
+            colorBox.style.backgroundColor = color;
+        }
+
+        // Change color on page refresh
+        window.onload = function () {
+            changeColor();
+        };
+
+        // Change color on click
+        document.getElementById("ccBox").onclick = function () {
+            changeColor();
+        };
+    </script>
+</body>
+
+</html>

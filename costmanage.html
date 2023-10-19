@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Event Cost Management</title>
+</head>
+
+<body>
+    <h1>*Event Cost Management*</h1>
+    <form id="eventForm">
+        <h2>Event Name: <input type="text" id="eventName" required /><br /><br /></h2>
+        <h2>Event Members Number:<input type="number" id="eventMembers" required /><br /><br /></h2>
+        <h2>Dish Price:<input type="number" id="dishPrice" required /><br /><br /></h2>
+        <h2>Advanced Payment:<input type="number" id="advancedPayment" required /><br /><br /></h2>
+        <button type="button" onclick="calculateCost()" style="width: 200px; font-size: 20px; ">Calculate Cost</button>
+    </form>
+
+    <h2 id="totalCost"></h2>
+
+    <h3 id="detail"></h3>
+
+    <script>
+        function calculateCost() {
+            var eventName = document.getElementById("eventName").value;
+            var eventMembers = parseInt(
+                document.getElementById("eventMembers").value
+            );
+            var dishPrice = parseFloat(document.getElementById("dishPrice").value);
+            var advancedPayment = parseFloat(
+                document.getElementById("advancedPayment").value
+            );
+
+            if (
+                !isNaN(eventMembers) &&
+                !isNaN(dishPrice) &&
+                !isNaN(advancedPayment)
+            ) {
+                var cost = eventMembers * dishPrice;
+
+                console.log(cost, "raw cost");
+
+                discount = (cost * 10) / 100;
+
+                console.log(discount, "discount");
+
+                totalCost = cost - discount;
+
+                console.log(totalCost, "totalCost");
+
+                finalCost = totalCost - advancedPayment;
+
+                console.log(finalCost, "finalCost");
+
+                document.getElementById("totalCost").innerHTML = finalCost;
+                document.getElementById("detail").innerHTML =
+                    "YOUR " +
+                    eventName +
+                    " EVENT " +
+                    " DISCOUNT IS " +
+                    discount +
+                    " / " +
+                    "ADVANCE PAYMENT IS " +
+                    advancedPayment +
+                    "  / AND FINAL BILL IS " +
+                    finalCost;
+            } else {
+                document.getElementById("totalCost").innerText =
+                    "Please enter valid numbers for all fields.";
+            }
+        }
+    </script>
+</body>
+
+</html>
